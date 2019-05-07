@@ -1,0 +1,61 @@
+{
+  "name": "starwars",
+  "version": "1.0.0",
+  "description": "An api for serving starwars movies names and casts",
+  "scripts": {
+    "build": "babel src -d dist --source-maps",
+    "serve": "NODE_ENV=production node dist/index.js",
+    "start": "NODE_ENV=development babel-node index.js",
+    "dev": "DEBUG=server:debug NODE_ENV=development nodemon index.js --exec babel-node",
+    "test": "DEBUG=server:debug NODE_ENV=test mocha --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node",
+    "test:watch": "DEBUG=server:debug NODE_ENV=development mocha  --require babel-core/register --watch --reporter  spec   tests/ --exec babel-node",
+    "eslint": "eslint src/**/*.js --ignore-pattern \"node_modules/\""
+  },
+  "main": "index.js",
+  "author": "Precious George",
+  "license": "MIT",
+  "babel": {},
+  "engines": {
+    "node": ">=8"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "node"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:node/recommended"
+    ],
+    "rules": {
+      "node/no-unsupported-features/es-syntax": 0,
+      "node/no-unsupported-features/es-builtins": 0
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2018
+    }
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.16.4",
+    "moment": "^2.24.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.8.4",
+    "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.2.0",
+    "config": "^3.1.0",
+    "debug": "^4.1.1",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0",
+    "supertest": "^4.0.2"
+  }
+}
