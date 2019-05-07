@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/soullounge/.nvm/versions/node/v8.10.0/bin/node /Users/soullounge/.nvm/versions/node/v8.10.0/bin/yarn test
+  /Users/soullounge/.nvm/versions/node/v8.10.0/bin/node /Users/soullounge/.nvm/versions/node/v8.10.0/bin/yarn test --watch
 
 PATH: 
   /anaconda3/bin:/anaconda3/condabin:/usr/local/sbin:/Users/soullounge/.rvm/gems/ruby-2.6.0/bin:/Users/soullounge/.rvm/gems/ruby-2.6.0@global/bin:/Users/soullounge/.rvm/rubies/ruby-2.6.0/bin:/Users/soullounge/.nvm/versions/node/v8.10.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:#/Users/soullounge/.phpenv/bin:/Users/soullounge/.rvm/bin
@@ -23,7 +23,7 @@ npm manifest:
       "serve": "NODE_ENV=production node dist/index.js",
       "start": "NODE_ENV=development babel-node index.js",
       "dev": "DEBUG=server:debug NODE_ENV=development nodemon index.js --exec babel-node",
-      "test": "DEBUG=server:debug NODE_ENV=test mocha --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node",
+      "test": "DEBUG=server:debug NODE_ENV=test mocha --timeout 10000 --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node",
       "test:watch": "DEBUG=server:debug NODE_ENV=development mocha  --require babel-core/register --watch --reporter  spec   tests/ --exec babel-node",
       "eslint": "eslint src/**/*.js --ignore-pattern \"node_modules/\""
     },
@@ -3587,7 +3587,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c DEBUG=server:debug NODE_ENV=test mocha --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node
+  Arguments: -c DEBUG=server:debug NODE_ENV=test mocha --timeout 10000 --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node --watch
   Directory: /Users/soullounge/Development/js_devs/nodejs/starwars
   Output:
   

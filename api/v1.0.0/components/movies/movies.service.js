@@ -5,7 +5,7 @@ const getMovies = async () => {
   try {
     return await axios.get(constants.SWAPI + '/films/');
   } catch (error) {
-    console.error(error);
+    return await error;
   }
 };
 
@@ -13,7 +13,7 @@ const getMovie = async id => {
   try {
     return await axios.get(constants.SWAPI + '/films/' + id + '/');
   } catch (error) {
-    console.error(error);
+    return await error;
   }
 };
 

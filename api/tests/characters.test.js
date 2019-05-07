@@ -14,7 +14,6 @@ describe('Character Services', () => {
     it('it should GET all starwars characters from swapi', done => {
       getCharacters()
         .then(result => {
-          console.log(result.data);
           expect(result.data).to.be.an('object');
           expect(result.data).to.include.all.keys('count', 'results');
         })
@@ -29,8 +28,7 @@ describe('Character Services', () => {
     it('it should GET a character from swapi api with supplied id', done => {
       getCharacter(1)
         .then(result => {
-          console.log(result);
-          expect(result.data).to.be.an(object);
+          expect(result.data).to.be.an('object');
           expect(result.data).to.include.all.keys('name', 'height', 'gender');
         })
         .catch(err => {
