@@ -1,23 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const { getCharacters } = require('./characters.controller');
 
-router.get('/', function(req, res) {
-  res.send({ hello: 'World' });
-});
-
-router.get('/sortby/height/:order', function(req, res) {
-  res.send();
-});
-
-router.get('/sortby/gender/:order', function(req, res) {
-  res.send();
-});
-
-router.get('/sortby/name/:order', function(req, res) {
-  res.send();
-});
-
-router.get('/filterby/:gender', function(req, res) {
+router.get('/?sortby=val&orderby=orderval&filterby=gender', function(req, res) {
+  getCharacters(req.param.sortby, req.params.orderby, req.params.filterby)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err =>
+      res.status(404).send({
+        message:
+          'Sorry Anakin Skywalker, there is no light to be found on the Dark side',
+        details: err
+      })
+    );
   res.send();
 });
 
