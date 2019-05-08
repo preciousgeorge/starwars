@@ -1,23 +1,33 @@
 const axios = require('axios');
 const constants = require('../../constants');
 
-const getCharacters = async () => {
-  try {
-    return await axios.get(constants.SWAPI + '/people/');
-  } catch (error) {
-    return await error;
-  }
+const fetchCharacters = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(constants.SWAPI + '/people/')
+      .then(data => {
+        resolve(data.data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
-const getCharacter = async id => {
-  try {
-    return await axios.get(constants.SWAPI + '/people/' + id + '/');
-  } catch (error) {
-    return await error;
-  }
+const fetchCharacter = id => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(constants.SWAPI + '/people/' + id + '/')
+      .then(data => {
+        resolve(data.result);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 module.exports = {
-  getCharacters,
-  getCharacter
+  fetchCharacters,
+  fetchCharacter
 };

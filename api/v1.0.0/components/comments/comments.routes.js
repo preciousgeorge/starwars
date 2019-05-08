@@ -8,7 +8,6 @@ router.post('/', (req, res) => {
       res.send({ message: 'Comment Inserted Successfully', data: data });
     })
     .catch(error => {
-      console.log(error);
       res.status(404).send({
         message:
           'Sorry Anakin Skywalker, there is no light to be found on the Dark side',

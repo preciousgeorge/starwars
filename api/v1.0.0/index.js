@@ -13,8 +13,5 @@ const comments = require('./components/comments/comments.routes');
 router.use('/movies', movies);
 router.use('/characters', characters);
 router.use('/comments', comments);
-router.use('/', function(req, res) {
-  res.send({ messsage: 'Welcome to Starwars; May the force be with you' });
-});
 
 module.exports = router;
