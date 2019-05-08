@@ -1,73 +1,96 @@
+const sequelize = require('sequelize');
 const models = require('../../../../models');
 const Op = models.Sequelize.Op;
 
 /**
  * create a new comment
  */
-insertComment = async data => {
-  try {
-    return await models.Comments.create({
-      filmId: filmId,
-      description: data.description
-    });
-  } catch (err) {
-    return err;
-  }
+insertComment = data => {
+  return new Promise((resolve, reject) => {
+    models.Comments.create({
+      filmId: data.filmId,
+      comment: data.comment,
+      userIp: data.userIp
+    })
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 /**
  * get all comments from the comments table
  */
-fetchAllComments = async () => {
-  try {
-    await models.Comments.findAll();
-  } catch (err) {
-    return err;
-  }
+fetchAllComments = () => {
+  return new Promise((resolve, reject) => {
+    models.Comments.findAll()
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 /**
  * get comments using a filmId
  */
-fetchCommentByFilmId = async id => {
-  try {
-    await models.Comments.findOne({
+fetchCommentByFilmId = id => {
+  return new Promise((resolve, reject) => {
+    models.Comments.findAll({
       where: { filmId: id }
-    });
-  } catch (err) {
-    return err;
-  }
+    })
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 /**
  * Get comments using filmId in reversed chronological order
  */
-fetchCommentByFilmIdReversed = async id => {
-  try {
-    await models.Comments.findOne({
+fetchCommentByFilmIdReversed = id => {
+  return new Promise((resolve, reject) => {
+    models.Comments.findAll({
+      attributes: ['filmId', 'comment', 'userIp', 'createdAt'],
       where: { filmId: id },
-      order: ['createAt', 'DESC']
-    });
-  } catch (err) {
-    return err;
-  }
+      order: [['createdAt', 'DESC']]
+    })
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 /**
  * count all comments in the database
  */
-countAllComments = async () => {
-  try {
-    return await models.Comments.count();
-  } catch (err) {
-    return err;
-  }
+countAllComments = () => {
+  return new Promise((resolve, reject) => {
+    models.Comments.count()
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 /**
  * count all comments for a particular film
  */
-countAllCommentsOnFilm = async id => {
+countAllCommentsOnFilm = id => {
   return new Promise((resolve, reject) => {
     models.Comments.count({ where: { filmId: { [Op.eq]: id } } })
       .then(data => {
@@ -77,12 +100,6 @@ countAllCommentsOnFilm = async id => {
         reject(err);
       });
   });
-
-  /*try {
-    return await models.Comments.count({ where: { id: { [Op.eq]: id } } });
-  } catch (err) {
-    return err;
-  }*/
 };
 
 module.exports = {

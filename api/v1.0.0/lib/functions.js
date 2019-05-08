@@ -7,6 +7,18 @@ let getMovieIdFromUrl = url => {
   return parseInt(arr[arr.length - 2]);
 };
 
+/**
+ * Check if string count is valid
+ * @param {string} str
+ */
+let isStrCountValid = str => {
+  if (str.length <= 500) {
+    return true;
+  }
+  return false;
+};
+
 module.exports = {
-  getMovieIdFromUrl
+  getMovieIdFromUrl,
+  isStrCountValid
 };
