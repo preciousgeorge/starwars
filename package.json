@@ -4,7 +4,7 @@
   "description": "An api for serving starwars movies names and casts",
   "scripts": {
     "build": "babel api -d dist --source-maps",
-    "serve": "NODE_ENV=production node index.js",
+    "serve": "NODE_ENV=production node index.js ./node_modules/.bin/sequelize --migrate -- env production",
     "start": "NODE_ENV=development babel-node index.js",
     "dev": "DEBUG=server:debug NODE_ENV=development nodemon index.js --exec babel-node",
     "test": "DEBUG=server:debug NODE_ENV=test mocha --timeout 10000 --require babel-core/register --reporter spec --exit   api/tests/ --exec babel-node",
