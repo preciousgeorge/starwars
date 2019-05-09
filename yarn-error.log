@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/soullounge/.nvm/versions/node/v8.10.0/bin/node /Users/soullounge/.nvm/versions/node/v8.10.0/bin/yarn start
+  /Users/soullounge/.nvm/versions/node/v8.10.0/bin/node /Users/soullounge/.nvm/versions/node/v8.10.0/bin/yarn build
 
 PATH: 
   /anaconda3/bin:/anaconda3/condabin:/usr/local/sbin:/Users/soullounge/.rvm/gems/ruby-2.6.0/bin:/Users/soullounge/.rvm/gems/ruby-2.6.0@global/bin:/Users/soullounge/.rvm/rubies/ruby-2.6.0/bin:/Users/soullounge/.nvm/versions/node/v8.10.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:#/Users/soullounge/.phpenv/bin:/Users/soullounge/.rvm/bin
@@ -3585,9 +3585,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit code: 2
   Command: sh
-  Arguments: -c NODE_ENV=development babel-node index.js
+  Arguments: -c babel src -d dist --source-maps
   Directory: /Users/soullounge/Development/js_devs/nodejs/starwars
   Output:
   
