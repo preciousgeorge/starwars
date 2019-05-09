@@ -22,7 +22,7 @@ app.use((error, req, res, next) => {
 });
 
 if (!module.parent) {
-  const server = app.listen(3000, () => {
+  const server = app.listen(process.env.PORT || 3000, () => {
     const host = server.address().address;
     const port = server.address().port;
     console.log(
