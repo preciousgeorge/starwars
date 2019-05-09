@@ -5,6 +5,11 @@ function toFeet(cm) {
   return feet + 'ft and ' + inches + 'inches';
 }
 
+const convertDateToUTC = date => {
+  return date.toUTCString();
+};
+
 module.exports = {
-  toFeet
+  toFeet,
+  convertDateToUTC
 };

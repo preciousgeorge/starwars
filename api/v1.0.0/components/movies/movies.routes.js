@@ -1,11 +1,13 @@
 const express = require('express');
-const controller = require('./movies.controller');
 const router = express.Router();
-const { listMovies, getMovieById } = require('./movies.controller');
+const {
+  listMovies,
+  getCharactersOfMovie,
+  fetchMovieComments,
+  commentOnMovie
+} = require('./movies.controller');
 
-/*router.get('/', function(req, res) {
-  res.send({ hello: 'World', ip: req.ip });
-});*/
+const { errorMessage } = require('../../lib/functions');
 
 router.get('/', (req, res) => {
   listMovies()
@@ -13,11 +15,54 @@ router.get('/', (req, res) => {
       res.send(result);
     })
     .catch(err => {
-      console.log(err);
       res.status(404).send({
-        message:
-          'Sorry Anakin Skywalker, there is no light to be found on the Dark side',
-        details: err
+        error: errorMessage.message,
+        message: err.message
+      });
+    });
+});
+
+router.get('/:id/comments/', (req, res) => {
+  fetchMovieComments(req.params.id)
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      res.status(404).send({
+        error: errorMessage.message,
+        message: err.message
+      });
+    });
+});
+
+router.post('/:id/comments/', (req, res) => {
+  commentOnMovie(req.params.id, req.body, req.ip)
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      res.status(404).send({
+        error: errorMessage.message,
+        message: err.message
+      });
+    });
+});
+
+router.get('/:id/characters/', (req, res) => {
+  getCharactersOfMovie(
+    req.params.id,
+    req.query.sortby,
+    req.query.orderby,
+    req.query.filterby
+  )
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      res.status(404).send({
+        error: errorMessage.message,
+        message: err.message,
+        code: err.code
       });
     });
 });

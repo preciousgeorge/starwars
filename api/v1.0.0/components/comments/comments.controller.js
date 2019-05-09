@@ -7,6 +7,8 @@ const {
 
 const { getMovieIdFromUrl } = require('../../lib/functions');
 
+const { convertDateToUTC } = require('../../lib/conversion');
+
 /**
  * check string length against a minimum condition
  * @param {string} comment
@@ -59,10 +61,6 @@ const validateCommentData = data => {
     errors.push('Comment must not be more than 500 characters');
   }
   return errors;
-};
-
-const convertDateToUTC = date => {
-  return date.toUTCString();
 };
 
 /**
@@ -120,5 +118,6 @@ const getCommentsForMovie = filmId => {
 
 module.exports = {
   createComment,
-  getCommentsForMovie
+  getCommentsForMovie,
+  validateCommentData
 };

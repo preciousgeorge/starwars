@@ -1,12 +1,24 @@
 const util = require('util');
 const movieService = require('./movies.service');
 const { sortBy } = require('../../lib/sort');
+const { convertDateToUTC } = require('../../lib/conversion');
 const {
   countAllCommentsOnFilm,
-  countAllComments
+  insertComment,
+  fetchCommentByFilmIdReversed
 } = require('../comments/comments.service');
-const { getMovieIdFromUrl } = require('../../lib/functions');
+const { validateCommentData } = require('../comments/comments.controller');
+const {
+  getMovieIdFromUrl,
+  getIdsFromMovieUrls,
+  addTotalHeight,
+  totalCharacters
+} = require('../../lib/functions');
+const charController = require('../characters/characters.service');
 
+const ASC = 0;
+const DESC = 1;
+const orderSet = { asc: ASC, desc: DESC };
 /**
  * Takes and array of movies object and reduces it to
  * just the needed data whilst adding the comments count
@@ -14,7 +26,7 @@ const { getMovieIdFromUrl } = require('../../lib/functions');
  * @param {array} data
  * @returns Promise
  */
-let reduceMovie = data => {
+const reduceMovie = data => {
   return data.map(async obj => {
     const newObj = {};
     let comments_count = '';
@@ -36,7 +48,7 @@ let reduceMovie = data => {
  * a promise
  * @return Promise
  */
-let listMovies = async () => {
+const listMovies = async () => {
   try {
     const moviesList = await movieService.getMovies();
     let sortedMovies = sortBy(moviesList.data.results, {
@@ -50,9 +62,102 @@ let listMovies = async () => {
   }
 };
 
-let getMovieById = async () => {};
+/**
+ * Gets characters in a movie using the movie's id
+ * @param {integer} filmId
+ * @param {string} sortval
+ * @param {string} order
+ * @param {string} filter
+ * @returns Promise
+ */
+const getCharactersOfMovie = (filmId, sortval, order, filter) => {
+  return new Promise((resolve, reject) => {
+    charController
+      .fetchCharacters()
+      .then(data => {
+        //let results = {};
+        results = data.results.filter(obj => {
+          return getIdsFromMovieUrls(obj['films']).includes(parseInt(filmId));
+        });
+
+        if (sortval) {
+          results = sortBy(results, {
+            prop: sortval,
+            desc: orderSet[order]
+          });
+        }
+
+        if (filter) {
+          results = results.filter(obj => {
+            return obj.gender == filter;
+          });
+        }
+
+        results = addTotalHeight(results);
+        results = totalCharacters(results);
+        console.log(results);
+        resolve(results);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+/**
+ * Adds comment to the db using a particular movie Id
+ * @param {integer} filmId
+ * @param {array} data
+ * @param {string} userIp
+ * @returns Promise
+ */
+const commentOnMovie = (filmId, data, userIp) => {
+  insertData = {};
+  insertData['filmId'] = filmId;
+  insertData['comment'] = data['comment'];
+  insertData['userIp'] = userIp;
+  return new Promise((resolve, reject) => {
+    errors = validateCommentData(insertData);
+    if (errors.length > 0) {
+      throw new Error(errors);
+    } else {
+      insertComment(insertData)
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    }
+  });
+};
+
+/**
+ * Get comment for a movie
+ * @param {integer} id
+ * @returns Promise
+ */
+const fetchMovieComments = id => {
+  return new Promise((resolve, reject) => {
+    fetchCommentByFilmIdReversed(id)
+      .then(data => {
+        data = data.map(el => el.get({ plain: true }));
+        data.map(obj => {
+          obj.createdAt = convertDateToUTC(obj.createdAt);
+          return obj;
+        });
+        console.log(data);
+        resolve(data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
 
 module.exports = {
   listMovies,
-  getMovieById
+  getCharactersOfMovie,
+  commentOnMovie,
+  fetchMovieComments
 };

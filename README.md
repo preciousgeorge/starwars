@@ -83,35 +83,19 @@ starwars
   - cd starwars & yarn
 ```
 
-## Api Endpoints
-
-There are three main endpoints and they are listed below:
-
-- [Movies] - This fetches the starwars movies
-- [Characters] - This fetches the characters for all starwar movies
-- [Comments] - This fetches/creates the comments for particular starwar movies.
-
-Ths features above
-
 ##### Movies
 
 Movie endpoint returns all movies
 
-| url            | verb | sample request                            |
-| -------------- | ---- | ----------------------------------------- |
-| api/v1/movies/ | GET  | FULL URL: http\|https://url/api/v1/movies |
-
-##### Characters
-
-Movie endpoint returns all movies
-
-| url                                                           | verb | sample request                                                        |
-| ------------------------------------------------------------- | ---- | --------------------------------------------------------------------- |
-| characters/                                                   | GET  | FULL URL: http\|https://url/api/v1/characters/                        |
-| characters?sortby={gender, height, e.t.c}?orderby=asc or desc | GET  | FULL URL: http\|https://url/api/v1/characters?sortby=height?orderby=1 |
-| characters?filterby=gender                                    | GET  | FULL URL: http\|https://url/api/v1/characters?filterby=gender         |
-
-The character endpoint can be fetched with just a slash in front of it, but when sorting or filtering comes to mind, the url must be formatted with query strings to give the desired result.
+| url                                                                             | verb | sample request                                                                                                         |
+| ------------------------------------------------------------------------------- | ---- | ---------------------------------------------------------------------------------------------------------------------- |
+| api/v1/movies/                                                                  | GET  | FULL URL: http\|https://url/api/v1/movies                                                                              |
+| api/v1/movies/:id                                                               | GET  | FULL URL: http\|https://url/api/v1/movies/1                                                                            |
+| api/v1/movies/:id/comments                                                      | GET  | FULL URL: http\|https://url/api/v1/movies/1/comments                                                                   |
+| api/v1/movies/:id/comments                                                      | POST | FULL URL: http\|https://url/api/v1/movies/1/comments Request Content: {comment:"Starwars is the best movie franchise"} |
+| api/v1/movies/:id/characters                                                    | GET  | FULL URL: http\|https://url/api/v1/movies/1/characters                                                                 |
+| api/v1/movies/:id/characters?sortby={gender, height, e.t.c}?orderby=asc or desc | GET  | FULL URL: http\|https://url/api/v1/movies/1/characters?sortby=height?orderby=asc                                       |
+| api/v1/movies/:id/characters?filterby=gender                                    | GET  | FULL URL: http\|https://url/api/v1/movies/1/characters?filterby=male                                                   |
 
 ###### Query Strings and how to use them:
 
@@ -119,14 +103,7 @@ i. sortby: the sortby query string takes a string arguement of either gender, he
 ii. orderby: the orderby query string must be followed by the string asc or desc (where asc = ascending, desc = descending) and the ordering would only work if the sorbyby query string is used
 iii. filterby: the filterby query string must be followed by a string e.g gender, the result returned would be that of containing the filter string.
 
-##### Comments
-
-Movie endpoint returns all movies
-
-| url               | verb | sample request                                                                                                             |
-| ----------------- | ---- | -------------------------------------------------------------------------------------------------------------------------- |
-| api/v1/comments/  | POST | FULL URL: http\|https://url/api/v1/comments Request Content: {film_id:"1", comment:"Starwars is the best movie franchise"} |
-| api/v1/comments/1 | GET  | FULL URL: http\|https://url/api/v1/comments/1                                                                              |
+                                                                            |
 
 ## License
 

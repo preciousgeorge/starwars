@@ -10,11 +10,16 @@ const getMovies = async () => {
 };
 
 const getMovie = async id => {
-  try {
-    return await axios.get(constants.SWAPI + '/films/' + id + '/');
-  } catch (error) {
-    return await error;
-  }
+  return new Promise((resolve, reject) => {
+    axios
+      .get(constants.SWAPI + '/films/' + id + '/')
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 module.exports = {

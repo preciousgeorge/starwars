@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createComment, getCommentsForMovie } = require('./comments.controller');
+const { errorMessage } = require('../../lib/functions');
 
 router.post('/', (req, res) => {
   createComment(req.body, req.ip)
@@ -9,9 +10,8 @@ router.post('/', (req, res) => {
     })
     .catch(error => {
       res.status(404).send({
-        message:
-          'Sorry Anakin Skywalker, there is no light to be found on the Dark side',
-        details: error
+        error: errorMessage.message,
+        message: error.message
       });
     });
 });
@@ -23,9 +23,8 @@ router.get('/:filmId', (req, res) => {
     })
     .catch(error => {
       res.status(404).send({
-        message:
-          'Sorry Anakin Skywalker, there is no light to be found on the Dark side',
-        details: error
+        error: errorMessage.message,
+        message: error.message
       });
     });
 });
