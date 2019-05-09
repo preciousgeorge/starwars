@@ -18,6 +18,6 @@
     "password": "starwars",
     "database": "starwars_production",
     "host": "127.0.0.1",
-    "dialect": "pgsql"
+    "dialect": "postgres"
   }
 }
