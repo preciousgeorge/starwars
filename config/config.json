@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "starwars",
-    "password": "starwars",
-    "database": "starwars_production",
-    "host": "127.0.0.1",
+    "username": "cvxwxnmnvpnjbe",
+    "password": "d30b9e00460552e5eb9fe4eb9803b91f6be06f276a5dec49d062e7fb44535238",
+    "database": "d528aq5vri80c4",
+    "host": "ec2-54-197-234-117.compute-1.amazonaws.com",
     "dialect": "postgres"
   }
 }
