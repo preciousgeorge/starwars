@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An api for serving starwars movies names and casts",
   "scripts": {
-    "build": "babel src -d dist --source-maps",
+    "build": "babel api -d dist --source-maps",
     "serve": "NODE_ENV=production node index.js",
     "start": "NODE_ENV=development babel-node index.js",
     "dev": "DEBUG=server:debug NODE_ENV=development nodemon index.js --exec babel-node",
