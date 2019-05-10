@@ -19,6 +19,7 @@ const charController = require('../characters/characters.service');
 const ASC = 0;
 const DESC = 1;
 const orderSet = { asc: ASC, desc: DESC };
+
 /**
  * Takes and array of movies object and reduces it to
  * just the needed data whilst adding the comments count
@@ -62,18 +63,23 @@ const listMovies = async () => {
   }
 };
 
+/**
+ * Get a single movie using and integer id
+ * @param {integer} id
+ * @returns Promise
+ */
 const fetchMovie = id => {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (!Number.isInteger(parseInt(id))) {
       throw new Error('Id must be from the Galaxy Integer');
     }
     movieService
       .getMovie(id)
       .then(results => {
-        resolve(results);
+        resolve(results.data);
       })
       .catch(err => {
-        reject(results);
+        reject(err);
       });
   });
 };
@@ -110,7 +116,6 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
 
         results = addTotalHeight(results);
         results = totalCharacters(results);
-        console.log(results);
         resolve(results);
       })
       .catch(err => {
@@ -161,7 +166,7 @@ const fetchMovieComments = id => {
           obj.createdAt = convertDateToUTC(obj.createdAt);
           return obj;
         });
-        console.log(data);
+
         resolve(data);
       })
       .catch(error => {
@@ -174,5 +179,6 @@ module.exports = {
   listMovies,
   getCharactersOfMovie,
   commentOnMovie,
-  fetchMovieComments
+  fetchMovieComments,
+  fetchMovie
 };

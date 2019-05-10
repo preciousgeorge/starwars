@@ -4,7 +4,8 @@ const {
   listMovies,
   getCharactersOfMovie,
   fetchMovieComments,
-  commentOnMovie
+  commentOnMovie,
+  fetchMovie
 } = require('./movies.controller');
 
 const { errorMessage } = require('../../lib/functions');
@@ -61,12 +62,22 @@ router.get('/:id/characters/', (req, res) => {
     .catch(err => {
       res.status(404).send({
         error: errorMessage.message,
-        message: err.message,
-        code: err.code
+        message: err.message
       });
     });
 });
 
-router.get('/:id', (req, res) => {});
+router.get('/:id', (req, res) => {
+  fetchMovie(req.params.id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(404).send({
+        error: errorMessage.message,
+        message: err.message
+      });
+    });
+});
 
 module.exports = router;
