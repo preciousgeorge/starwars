@@ -97,11 +97,17 @@ Movie endpoint returns all movies
 | api/v1/movies/:id/characters?sortby={gender, height, e.t.c}?orderby=asc or desc | GET  | FULL URL: http\|https://url/api/v1/movies/1/characters?sortby=height?orderby=asc                                       |
 | api/v1/movies/:id/characters?filterby=gender                                    | GET  | FULL URL: http\|https://url/api/v1/movies/1/characters?filterby=male                                                   |
 
+###### URL path:
+
+- api : is the path to the api part of the application
+- v1 : is the version, if a lot of features are to be added that would change the way the present implementation, instead of just changing everything, another version should be created. Versioning is to help prevent issues with clients making requests and expecting a certain result but getting something entirely different, some client applications would not neccessarily change as much as the api they request to.
+- :id : this is an integer used to identify a unique data set, e.g movie :id identifies one movie, so anywhere it is required, a single dataset or it's relations is either being fetched, modified or created.
+
 ###### Query Strings and how to use them:
 
-i. sortby: the sortby query string takes a string arguement of either gender, height e.t.c
-ii. orderby: the orderby query string must be followed by the string asc or desc (where asc = ascending, desc = descending) and the ordering would only work if the sorbyby query string is used
-iii. filterby: the filterby query string must be followed by a string e.g gender, the result returned would be that of containing the filter string.
+- sortby: the sortby query string takes a string arguement of either gender, height e.t.c
+- orderby: the orderby query string must be followed by the string asc or desc (where asc = ascending, desc = descending) and the ordering would only work if the sorbyby query string is used
+- filterby: the filterby query string must be followed by a string e.g gender, the result returned would be that of containing the filter string.
 
                                                                             |
 
