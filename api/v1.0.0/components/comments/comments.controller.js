@@ -54,11 +54,17 @@ const validateFilmId = filmId => {
 const validateCommentData = data => {
   errors = [];
   if (validateFilmId(data['filmId']) == false) {
-    errors.push('Film id cannot be empty, and must be a valid integer');
+    errors.push(
+      "Caraya's soul: Film id cannot be empty, and must be a valid citizen the integer Galaxy, you Outlander"
+    );
   } else if (validateCommentMinLen(data['comment']) == false) {
-    errors.push('Comment must be at least 10 characters');
+    errors.push(
+      "Caraya's soul: Thy Words must be of at least `10` Characters, you Outlander"
+    );
   } else if (validateCommentMaxLen(data['comment']) == false) {
-    errors.push('Comment must not be more than 500 characters');
+    errors.push(
+      "Caraya's soul: Thy Words must not be of more than 500 Characters, you Outlander"
+    );
   }
   return errors;
 };
@@ -98,7 +104,9 @@ const createComment = (data, userIp) => {
 const getCommentsForMovie = filmId => {
   return new Promise((resolve, reject) => {
     if (validateFilmId(filmId) == false) {
-      throw new Error('FildId cannot be empty');
+      throw new Error(
+        'FilmId cannot be empty and must be a valid citizen of the integer galaxy'
+      );
     } else {
       fetchCommentByFilmIdReversed(filmId)
         .then(data => {

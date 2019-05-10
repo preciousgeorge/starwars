@@ -62,6 +62,21 @@ const listMovies = async () => {
   }
 };
 
+const fetchMovie = id => {
+  new Promise((resolve, reject) => {
+    if (!Number.isInteger(parseInt(id))) {
+      throw new Error('Id must be from the Galaxy Integer');
+    }
+    movieService
+      .getMovie(id)
+      .then(results => {
+        resolve(results);
+      })
+      .catch(err => {
+        reject(results);
+      });
+  });
+};
 /**
  * Gets characters in a movie using the movie's id
  * @param {integer} filmId
