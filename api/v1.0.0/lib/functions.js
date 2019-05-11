@@ -72,11 +72,18 @@ let errorMessage = {
     'Sorry Anakin Skywalker, there is no light to be found on the Dark side'
 };
 
+let filterByProp = (data, prop, _filter) => {
+  return data.filter(dat => {
+    return dat[prop] == _filter;
+  });
+};
+
 module.exports = {
   getMovieIdFromUrl,
   isStrCountValid,
   getIdsFromMovieUrls,
   addTotalHeight,
   totalCharacters,
-  errorMessage
+  errorMessage,
+  filterByProp
 };

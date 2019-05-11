@@ -12,7 +12,8 @@ const {
   getMovieIdFromUrl,
   getIdsFromMovieUrls,
   addTotalHeight,
-  totalCharacters
+  totalCharacters,
+  filterByProp
 } = require('../../lib/functions');
 const charController = require('../characters/characters.service');
 
@@ -96,7 +97,7 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
     charController
       .fetchCharacters()
       .then(data => {
-        //let results = {};
+        //Filter movie characters using film id
         results = data.results.filter(obj => {
           return getIdsFromMovieUrls(obj['films']).includes(parseInt(filmId));
         });
@@ -109,13 +110,13 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
         }
 
         if (filter) {
-          results = results.filter(obj => {
-            return obj.gender == filter;
-          });
+          // Filter movie characters using gender
+          results = filterByProp(results, 'gender', filter);
         }
 
         results = addTotalHeight(results);
         results = totalCharacters(results);
+
         resolve(results);
       })
       .catch(err => {
