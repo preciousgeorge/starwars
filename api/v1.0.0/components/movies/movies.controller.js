@@ -13,7 +13,8 @@ const {
   getIdsFromMovieUrls,
   addTotalHeight,
   totalCharacters,
-  filterByProp
+  filterByProp,
+  validateIdInteger
 } = require('../../lib/functions');
 const charController = require('../characters/characters.service');
 
@@ -94,6 +95,9 @@ const fetchMovie = id => {
  */
 const getCharactersOfMovie = (filmId, sortval, order, filter) => {
   return new Promise((resolve, reject) => {
+    if (!Number.isInteger(parseInt(filmId))) {
+      throw new Error('Id must be from the Galaxy Integer');
+    }
     charController
       .fetchCharacters()
       .then(data => {
@@ -114,8 +118,8 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
           results = filterByProp(results, 'gender', filter);
         }
 
-        results = addTotalHeight(results);
-        results = totalCharacters(results);
+        // Add total Height and total amount of Character marching the criteria
+        results = totalCharacters(addTotalHeight(results));
 
         resolve(results);
       })
@@ -160,6 +164,7 @@ const commentOnMovie = (filmId, data, userIp) => {
  */
 const fetchMovieComments = id => {
   return new Promise((resolve, reject) => {
+    validateIdInteger(id);
     fetchCommentByFilmIdReversed(id)
       .then(data => {
         data = data.map(el => el.get({ plain: true }));

@@ -85,5 +85,6 @@ module.exports = {
   addTotalHeight,
   totalCharacters,
   errorMessage,
-  filterByProp
+  filterByProp,
+  validateIdInteger
 };

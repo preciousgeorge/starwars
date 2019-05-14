@@ -73,6 +73,7 @@ router.get('/:id', (req, res) => {
       res.send(data);
     })
     .catch(err => {
+      console.log(err.name);
       res.status(404).send({
         error: errorMessage.message,
         message: err.message
