@@ -118,6 +118,10 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
                     results = filterByProp(results, 'gender', filter);
                 }
 
+                if (!results) {
+                    reject("Sorry, the being you seek, has not been born yet, so he/she does not exist");
+                }
+
                 // Add total Height and total amount of Character marching the criteria
                 results = totalCharacters(addTotalHeight(results));
 

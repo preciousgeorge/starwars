@@ -36,15 +36,16 @@ const isStrCountValid = str => {
  */
 const addTotalHeight = arr => {
     lenArr = arr.length;
+    _total_height = {}
     totalHeight = 0;
     for (let i = 0; i < lenArr; i++) {
         totalHeight += parseInt(arr[i]['height']);
     }
-
-    arr.push({
+    _total_height['_total_height'] = {
         total_height_cm: totalHeight + 'cm',
         total_height_feet: toFeet(totalHeight)
-    });
+    }
+    arr.push(_total_height);
 
     return arr;
 };
@@ -57,12 +58,14 @@ const addTotalHeight = arr => {
 const totalCharacters = arr => {
     lenArr = arr.length;
     totalChar = 0;
+    _total_characters = {}
+
     for (let i = 0; i < lenArr; i++) {
         totalChar += 1;
     }
-    arr.push({
-        total_characters: totalChar
-    });
+    _total_characters['_total_characters'] = totalChar
+
+    arr.push(_total_characters);
 
     return arr;
 };
