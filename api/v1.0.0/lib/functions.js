@@ -92,7 +92,7 @@ const filterByProp = (data, prop, _filter) => {
  * @param value
  * @returns boolean 
  */
-const validateIdInteger = value => {
+const isValidInteger = value => {
     return !isNaN(value) &&
         parseInt(Number(value)) == value &&
         !isNaN(parseInt(value, 10));
@@ -136,6 +136,8 @@ const getUserIp = requestObj => {
     return requestObj.connection.remoteAddress;
 }
 
+getMethods = (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')
+
 module.exports = {
     getMovieIdFromUrl,
     isStrCountValid,
@@ -144,8 +146,9 @@ module.exports = {
     totalCharacters,
     errorMessage,
     filterByProp,
-    validateIdInteger,
+    isValidInteger,
     getLastIp,
     getRequestHeaders,
-    getUserIp
+    getUserIp,
+    getMethods
 };

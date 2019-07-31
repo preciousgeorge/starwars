@@ -14,7 +14,7 @@ const {
     addTotalHeight,
     totalCharacters,
     filterByProp,
-    validateIdInteger
+    isValidInteger
 } = require('../../lib/functions');
 const charController = require('../characters/characters.service');
 
@@ -39,7 +39,7 @@ const reduceMovie = data => {
         try {
             comments_count = await countAllCommentsOnFilm(getMovieIdFromUrl(obj.url));
         } catch (err) {
-            return err;
+            throw new Error(err);
         }
         newObj['comments_count'] = comments_count;
         return newObj;
@@ -54,6 +54,7 @@ const reduceMovie = data => {
 const listMovies = async() => {
     try {
         const moviesList = await movieService.getMovies();
+
         let sortedMovies = sortBy(moviesList.data.results, {
             prop: 'release_date',
             desc: false
@@ -72,7 +73,7 @@ const listMovies = async() => {
  */
 const fetchMovie = id => {
     return new Promise((resolve, reject) => {
-        if (!validateIdIntegerid(id)) {
+        if (!isValidInteger(id)) {
             throw new Error('Id must be from the Galaxy Integer');
         }
         movieService
@@ -95,12 +96,15 @@ const fetchMovie = id => {
  */
 const getCharactersOfMovie = (filmId, sortval, order, filter) => {
     return new Promise((resolve, reject) => {
-        if (!Number.isInteger(parseInt(filmId))) {
+
+        if (!isValidInteger(filmId)) {
             throw new Error('Id must be from the Galaxy Integer');
         }
         charController
             .fetchCharacters()
             .then(data => {
+
+
                 //Filter movie characters using film id
                 results = data.results.filter(obj => {
                     return getIdsFromMovieUrls(obj['films']).includes(parseInt(filmId));
@@ -118,8 +122,8 @@ const getCharactersOfMovie = (filmId, sortval, order, filter) => {
                     results = filterByProp(results, 'gender', filter);
                 }
 
-                if (!results) {
-                    reject("Sorry, the being you seek, has not been born yet, so he/she does not exist");
+                if (results.length < 1) {
+                    reject(new Error("The being you seek has not been born yet, so he/she does not exist in these parts"));
                 }
 
                 // Add total Height and total amount of Character marching the criteria
@@ -148,16 +152,22 @@ const commentOnMovie = (filmId, data, userIp) => {
     return new Promise((resolve, reject) => {
         errors = validateCommentData(insertData);
         if (errors.length > 0) {
-            throw new Error(errors);
-        } else {
-            insertComment(insertData)
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(error => {
-                    reject(error);
-                });
+            reject(new Error(errors));
         }
+        movieService
+            .getMovie(filmId)
+            .then(data => {
+                insertComment(insertData)
+                    .then(data => {
+                        resolve(data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            }).catch(error => {
+                reject(error)
+            })
+
     });
 };
 
@@ -168,7 +178,7 @@ const commentOnMovie = (filmId, data, userIp) => {
  */
 const fetchMovieComments = id => {
     return new Promise((resolve, reject) => {
-        if (!validateIdInteger(id)) {
+        if (!isValidInteger(id)) {
             reject("Please provide a valid integer");
         }
         fetchCommentByFilmIdReversed(id)

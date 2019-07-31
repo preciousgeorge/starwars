@@ -78,9 +78,23 @@ starwars
 
 # Install!
 
+
+Go to your terminal annd run
 ```
   - git clone https://github.com/preciousgeorge/starwars
   - cd starwars & yarn
+  - ./node_modules/.bin/sequelize db:migrate
+```
+
+Open projectfolder/config/config.json.ed
+Rename the file to config.json
+
+Set the database configurations there to the ones specific for your environment, please enter `null` for value that does not apply to your environment.
+
+Then run the command below in your terminal from the project dirctory
+
+```
+  - ./node_modules/.bin/sequelize db:migrate
 ```
 
 ##### Movies
@@ -109,7 +123,7 @@ Movie endpoint returns all movies
 - orderby: the orderby query string must be followed by the string asc or desc (where asc = ascending, desc = descending) and the ordering would only work if the sorbyby query string is used
 - filterby: the filterby query string must be followed by a string e.g gender, the result returned would be that of containing the filter string.
 
-                                                                            |
+
 
 ## License
 

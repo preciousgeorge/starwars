@@ -1,11 +1,18 @@
-const sortBy = () => {
-    let toString = Object.prototype.toString,
+const sortBy = (function() {
+
+
+
+    var toString = Object.prototype.toString,
         // default parser function
-        parse = (x) => {
+        parse = function(x) {
             return x;
         },
         // gets the item to be sorted
-        getItem = x => {
+        getItem = function(x) {
+            console.log("======================")
+            console.log(this)
+            console.log("======================")
+
             let isObject = x != null && typeof x === 'object';
             let isProp = isObject && this.prop in x;
             return this.parser(isProp ? x[this.prop] : x);
@@ -21,18 +28,19 @@ const sortBy = () => {
      * @property {Function} cfg.parser: function to parse the items to expected type
      * @return {Array}
      */
-    return sortby = (array, cfg) => {
+    return function(array, cfg) {
         if (!(array instanceof Array && array.length)) return [];
         if (toString.call(cfg) !== '[object Object]') cfg = {};
+
         if (typeof cfg.parser !== 'function') cfg.parser = parse;
         cfg.desc = !!cfg.desc ? -1 : 1;
-        return array.sort(function(a, b) {
+        return array.sort((a, b) => {
             a = getItem.call(cfg, a);
             b = getItem.call(cfg, b);
             return cfg.desc * (a < b ? -1 : +(a > b));
         });
     };
-};
+})();
 
 module.exports = {
     sortBy

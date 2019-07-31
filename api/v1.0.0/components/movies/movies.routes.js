@@ -8,11 +8,13 @@ const {
     fetchMovie
 } = require('./movies.controller');
 
+
 const { errorMessage, getUserIp } = require('../../lib/functions');
 
 router.get('/', (req, res) => {
     listMovies()
         .then(result => {
+            console.log(result)
             res.send(result);
         })
         .catch(err => {
@@ -37,7 +39,7 @@ router.get('/:id/comments/', (req, res) => {
 });
 
 router.post('/:id/comments/', (req, res) => {
-    ipAddr = getUserIp || req.ip;
+    ipAddr = getUserIp(req) || req.ip;
     commentOnMovie(req.params.id, req.body, ipAddr)
         .then(result => {
             res.send(result);
